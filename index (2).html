@@ -1,0 +1,1063 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Colin Williams — AI Builder</title>
+  <meta name="description" content="The work of Colin Williams. AI products built from a 30-year career in corporate security, a redundancy, and a basketball court.">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Colin Williams — AI Builder">
+  <meta property="og:description" content="The work of Colin Williams. AI products built from a 30-year career in corporate security, a redundancy, and a basketball court.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://colinwilliams.space">
+
+  <!-- Google Fonts: Fraunces (display serif) + Newsreader (body serif) + JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght,SOFT,WONK@9..144,300..900,0..100,0..1&family=Newsreader:ital,opsz,wght@0,6..72,200..800;1,6..72,200..800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg: #F5F0E5;
+      --bg-soft: #EFE9DB;
+      --text: #1A1A1A;
+      --text-soft: #5C5650;
+      --text-muted: #847C72;
+      --accent: #2D5F3F;
+      --accent-light: #4A7C5A;
+      --line: rgba(26, 26, 26, 0.12);
+      --line-soft: rgba(26, 26, 26, 0.06);
+      --display-font: 'Fraunces', Georgia, serif;
+      --body-font: 'Newsreader', Georgia, serif;
+      --mono-font: 'JetBrains Mono', monospace;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--body-font);
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.55;
+      font-size: 18px;
+      font-weight: 400;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      overflow-x: hidden;
+    }
+
+    /* Subtle noise texture overlay */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 1;
+      opacity: 0.025;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+    }
+
+    /* Layout helpers */
+    .container {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 40px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .container-prose {
+      max-width: 680px;
+      margin: 0 auto;
+      padding: 0 40px;
+      position: relative;
+      z-index: 2;
+    }
+
+    /* Typography */
+    h1, h2, h3, h4 {
+      font-family: var(--display-font);
+      font-weight: 400;
+      font-variation-settings: 'opsz' 90, 'SOFT' 30;
+      letter-spacing: -0.02em;
+      color: var(--text);
+    }
+
+    h1 {
+      font-size: clamp(56px, 9vw, 128px);
+      line-height: 0.95;
+      font-weight: 300;
+      letter-spacing: -0.045em;
+      font-variation-settings: 'opsz' 144, 'SOFT' 50;
+    }
+
+    h2 {
+      font-size: clamp(36px, 5vw, 64px);
+      line-height: 1.05;
+      font-weight: 350;
+      letter-spacing: -0.035em;
+    }
+
+    h3 {
+      font-size: clamp(24px, 3vw, 36px);
+      line-height: 1.15;
+      font-weight: 400;
+      letter-spacing: -0.02em;
+    }
+
+    .eyebrow {
+      font-family: var(--mono-font);
+      font-size: 12px;
+      font-weight: 400;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 24px;
+      display: block;
+    }
+
+    a {
+      color: var(--accent);
+      text-decoration: none;
+      transition: opacity 0.2s ease;
+    }
+
+    a:hover {
+      opacity: 0.65;
+    }
+
+    /* ====== NAV ====== */
+    nav.top {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      padding: 32px 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 10;
+    }
+
+    nav.top .brand {
+      font-family: var(--mono-font);
+      font-size: 13px;
+      letter-spacing: 0.05em;
+      color: var(--text);
+      font-weight: 500;
+    }
+
+    nav.top .links {
+      display: flex;
+      gap: 32px;
+    }
+
+    nav.top .links a {
+      font-family: var(--mono-font);
+      font-size: 12px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-soft);
+    }
+
+    nav.top .links a:hover {
+      color: var(--accent);
+      opacity: 1;
+    }
+
+    /* ====== HERO ====== */
+    section.hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 140px 0 80px;
+      position: relative;
+    }
+
+    .hero-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-bottom: 60px;
+      gap: 40px;
+    }
+
+    .hero-meta-left {
+      font-family: var(--mono-font);
+      font-size: 13px;
+      letter-spacing: 0.05em;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+
+    .hero-meta-left .label {
+      display: block;
+      font-size: 11px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      margin-bottom: 6px;
+      color: var(--text-muted);
+    }
+
+    .hero-meta-right {
+      text-align: right;
+      font-family: var(--mono-font);
+      font-size: 13px;
+      letter-spacing: 0.05em;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+
+    .hero h1 .accent {
+      color: var(--accent);
+      font-style: italic;
+      font-weight: 300;
+      font-variation-settings: 'opsz' 144, 'SOFT' 100;
+    }
+
+    .hero-tagline {
+      margin-top: 56px;
+      font-family: var(--display-font);
+      font-size: clamp(20px, 2.2vw, 28px);
+      font-style: italic;
+      font-weight: 300;
+      font-variation-settings: 'opsz' 14, 'SOFT' 100;
+      max-width: 620px;
+      line-height: 1.45;
+      color: var(--text-soft);
+    }
+
+    .hero-tagline em {
+      color: var(--accent);
+      font-style: italic;
+    }
+
+    .hero-scroll {
+      margin-top: 80px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      font-family: var(--mono-font);
+      font-size: 11px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+
+    .hero-scroll::before {
+      content: '';
+      width: 40px;
+      height: 1px;
+      background: var(--text-muted);
+    }
+
+    /* ====== SECTIONS ====== */
+    section {
+      padding: 120px 0;
+      position: relative;
+    }
+
+    .section-header {
+      display: grid;
+      grid-template-columns: 1fr 3fr;
+      gap: 60px;
+      margin-bottom: 80px;
+      align-items: baseline;
+    }
+
+    .section-header .label {
+      font-family: var(--mono-font);
+      font-size: 12px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      padding-top: 14px;
+    }
+
+    /* ====== ABOUT ====== */
+    section.about {
+      background: var(--bg-soft);
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .about-prose {
+      max-width: 660px;
+      margin: 0 auto;
+      font-family: var(--body-font);
+      font-size: 21px;
+      line-height: 1.65;
+      font-weight: 380;
+      color: var(--text);
+    }
+
+    .about-prose p {
+      margin-bottom: 24px;
+    }
+
+    .about-prose p:first-child {
+      font-size: clamp(28px, 3.2vw, 40px);
+      font-family: var(--display-font);
+      font-weight: 300;
+      line-height: 1.2;
+      letter-spacing: -0.02em;
+      margin-bottom: 48px;
+      color: var(--text);
+      font-variation-settings: 'opsz' 90;
+    }
+
+    .about-prose .hard-line {
+      font-family: var(--display-font);
+      font-style: italic;
+      font-weight: 350;
+      font-size: 24px;
+      line-height: 1.4;
+      color: var(--accent);
+      padding: 16px 0;
+      margin: 24px 0;
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+      font-variation-settings: 'opsz' 36, 'SOFT' 100;
+    }
+
+    .about-list {
+      list-style: none;
+      margin: 32px 0;
+      padding: 0;
+    }
+
+    .about-list li {
+      padding: 14px 0;
+      border-bottom: 1px solid var(--line-soft);
+      font-size: 18px;
+      line-height: 1.5;
+      color: var(--text);
+      display: flex;
+      gap: 16px;
+    }
+
+    .about-list li::before {
+      content: '—';
+      color: var(--accent);
+      font-weight: 500;
+      flex-shrink: 0;
+    }
+
+    .about-prose .closing-line {
+      font-family: var(--display-font);
+      font-style: italic;
+      font-weight: 300;
+      font-size: clamp(22px, 2.4vw, 28px);
+      line-height: 1.45;
+      color: var(--text-soft);
+      margin-top: 48px;
+      padding-top: 32px;
+      border-top: 1px solid var(--line);
+      font-variation-settings: 'opsz' 36, 'SOFT' 100;
+    }
+
+    /* ====== WORK / PRODUCTS ====== */
+    section.work {
+      padding-top: 140px;
+    }
+
+    .work-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1px;
+      background: var(--line);
+      border: 1px solid var(--line);
+    }
+
+    .product-card {
+      background: var(--bg);
+      padding: 48px 44px;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+      position: relative;
+      transition: background 0.3s ease;
+    }
+
+    .product-card:hover {
+      background: var(--bg-soft);
+    }
+
+    .product-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-family: var(--mono-font);
+      font-size: 11px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+
+    .product-status {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .product-status::before {
+      content: '';
+      display: inline-block;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--accent);
+    }
+
+    .product-name {
+      font-family: var(--display-font);
+      font-size: clamp(32px, 3.5vw, 42px);
+      font-weight: 350;
+      line-height: 1.05;
+      letter-spacing: -0.025em;
+      color: var(--text);
+      font-variation-settings: 'opsz' 60, 'SOFT' 30;
+    }
+
+    .product-tagline {
+      font-family: var(--display-font);
+      font-style: italic;
+      font-size: 19px;
+      line-height: 1.4;
+      color: var(--text-soft);
+      font-weight: 350;
+      font-variation-settings: 'opsz' 30, 'SOFT' 100;
+    }
+
+    .product-description {
+      font-size: 16px;
+      line-height: 1.6;
+      color: var(--text-soft);
+    }
+
+    .product-footer {
+      margin-top: auto;
+      padding-top: 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 1px solid var(--line-soft);
+    }
+
+    .product-link {
+      font-family: var(--mono-font);
+      font-size: 12px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--accent);
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .product-link::after {
+      content: '→';
+      transition: transform 0.2s ease;
+      font-family: var(--body-font);
+    }
+
+    .product-link:hover::after {
+      transform: translateX(4px);
+    }
+
+    .product-sector {
+      font-family: var(--mono-font);
+      font-size: 11px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+
+    /* ====== CURRENTLY ====== */
+    section.currently {
+      background: var(--bg-soft);
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .currently-content {
+      max-width: 760px;
+      margin: 0 auto;
+      text-align: left;
+    }
+
+    .currently-title {
+      font-family: var(--display-font);
+      font-size: clamp(32px, 4vw, 48px);
+      font-weight: 350;
+      line-height: 1.1;
+      letter-spacing: -0.025em;
+      margin-bottom: 40px;
+      font-variation-settings: 'opsz' 90, 'SOFT' 30;
+    }
+
+    .currently-title em {
+      color: var(--accent);
+      font-style: italic;
+      font-weight: 300;
+    }
+
+    .currently-prose {
+      font-size: 20px;
+      line-height: 1.6;
+      color: var(--text-soft);
+    }
+
+    .currently-prose p {
+      margin-bottom: 20px;
+    }
+
+    .currently-prose strong {
+      color: var(--text);
+      font-weight: 500;
+    }
+
+    /* ====== CONTACT ====== */
+    section.contact {
+      padding: 140px 0 100px;
+    }
+
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+    }
+
+    .contact-left {
+      max-width: 460px;
+    }
+
+    .contact-heading {
+      font-family: var(--display-font);
+      font-size: clamp(40px, 5vw, 64px);
+      font-weight: 300;
+      line-height: 1.05;
+      letter-spacing: -0.035em;
+      margin-bottom: 32px;
+      font-variation-settings: 'opsz' 144, 'SOFT' 50;
+    }
+
+    .contact-heading em {
+      color: var(--accent);
+      font-style: italic;
+    }
+
+    .contact-intro {
+      font-size: 18px;
+      line-height: 1.55;
+      color: var(--text-soft);
+      margin-bottom: 48px;
+    }
+
+    .contact-channels {
+      list-style: none;
+      padding: 0;
+      border-top: 1px solid var(--line);
+    }
+
+    .contact-channels li {
+      border-bottom: 1px solid var(--line);
+      padding: 20px 0;
+    }
+
+    .contact-channels a {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: var(--text);
+      text-decoration: none;
+      font-family: var(--body-font);
+      font-size: 18px;
+      transition: color 0.2s ease;
+    }
+
+    .contact-channels a:hover {
+      color: var(--accent);
+      opacity: 1;
+    }
+
+    .contact-channels .channel-label {
+      font-family: var(--mono-font);
+      font-size: 12px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-right: 24px;
+    }
+
+    .contact-channels .channel-value {
+      flex: 1;
+      text-align: right;
+    }
+
+    /* ====== FORM ====== */
+    .contact-form {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    .form-row {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .form-row label {
+      font-family: var(--mono-font);
+      font-size: 11px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+
+    .form-row input,
+    .form-row textarea {
+      background: transparent;
+      border: none;
+      border-bottom: 1px solid var(--line);
+      padding: 12px 0;
+      font-family: var(--body-font);
+      font-size: 18px;
+      color: var(--text);
+      transition: border-color 0.2s ease;
+      width: 100%;
+    }
+
+    .form-row textarea {
+      resize: vertical;
+      min-height: 100px;
+    }
+
+    .form-row input:focus,
+    .form-row textarea:focus {
+      outline: none;
+      border-bottom-color: var(--accent);
+    }
+
+    .form-submit {
+      align-self: flex-start;
+      margin-top: 16px;
+      background: var(--text);
+      color: var(--bg);
+      border: none;
+      padding: 18px 40px;
+      font-family: var(--mono-font);
+      font-size: 12px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: background 0.2s ease;
+    }
+
+    .form-submit:hover {
+      background: var(--accent);
+    }
+
+    /* ====== FOOTER ====== */
+    footer {
+      border-top: 1px solid var(--line);
+      padding: 40px 0;
+      background: var(--bg-soft);
+    }
+
+    .footer-content {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-family: var(--mono-font);
+      font-size: 12px;
+      letter-spacing: 0.05em;
+      color: var(--text-muted);
+    }
+
+    .footer-content .footer-name {
+      font-weight: 500;
+      color: var(--text-soft);
+    }
+
+    /* ====== ANIMATIONS ====== */
+    .fade-up {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+
+    .fade-up.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ====== RESPONSIVE ====== */
+    @media (max-width: 880px) {
+      .container, .container-prose {
+        padding: 0 24px;
+      }
+
+      nav.top {
+        padding: 24px;
+      }
+
+      nav.top .links {
+        gap: 20px;
+      }
+
+      .hero-meta {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 24px;
+      }
+
+      .hero-meta-right {
+        text-align: left;
+      }
+
+      .section-header {
+        grid-template-columns: 1fr;
+        gap: 16px;
+        margin-bottom: 48px;
+      }
+
+      .work-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .product-card {
+        padding: 36px 28px;
+      }
+
+      .contact-grid {
+        grid-template-columns: 1fr;
+        gap: 60px;
+      }
+
+      section {
+        padding: 80px 0;
+      }
+
+      .about-prose {
+        font-size: 19px;
+      }
+
+      .footer-content {
+        flex-direction: column;
+        gap: 12px;
+        text-align: center;
+      }
+    }
+
+    @media (max-width: 480px) {
+      nav.top .links a {
+        font-size: 10px;
+      }
+
+      .hero h1 {
+        font-size: 56px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ====== NAV ====== -->
+  <nav class="top">
+    <div class="brand">CW</div>
+    <div class="links">
+      <a href="#about">About</a>
+      <a href="#work">Work</a>
+      <a href="#currently">Now</a>
+      <a href="#contact">Contact</a>
+    </div>
+  </nav>
+
+  <!-- ====== HERO ====== -->
+  <section class="hero">
+    <div class="container">
+      <div class="hero-meta">
+        <div class="hero-meta-left">
+          <span class="label">Portfolio</span>
+          <span>2024 — Present</span>
+        </div>
+        <div class="hero-meta-right">
+          <span class="label">Based in</span>
+          <span>Wolverhampton, UK</span>
+        </div>
+      </div>
+
+      <h1>Colin<br>Williams<span class="accent">.</span></h1>
+
+      <p class="hero-tagline">
+        AI builder. <em>Thirty years</em> in corporate security taught me discipline. A redundancy and a basketball court taught me what came next.
+      </p>
+
+      <div class="hero-scroll">Scroll to read</div>
+    </div>
+  </section>
+
+  <!-- ====== ABOUT ====== -->
+  <section class="about" id="about">
+    <div class="container">
+      <div class="section-header">
+        <div class="label">01 — The Story</div>
+        <h2 class="fade-up">What started with a shovel.</h2>
+      </div>
+    </div>
+
+    <div class="container-prose">
+      <div class="about-prose fade-up">
+        <p>This started with a shovel.</p>
+
+        <p>After 30 years in corporate security, I was made redundant. No plan. No clear direction. For the first time in decades, there was no structure. No system. No playbook. Just me.</p>
+
+        <p>But I knew one thing — I had to challenge myself. So I did something completely out of character. When my son casually suggested building a basketball court in the garden, I said yes.</p>
+
+        <p>Truth is, DIY is not my world. Not even close. But that wasn't the point. This wasn't really about a basketball court.</p>
+
+        <p>It became the hardest thing I've ever done. Physically. Mentally. Sleepless nights. Endless digging. Stone after stone. Root after root. And no matter how much I cleared, there was always more underneath.</p>
+
+        <p>At one point — exhausted, covered in dirt, hands trashed and not used to this — I stopped. Had a moment.</p>
+
+        <p>I realised I was tearing everything out. All these stones. And yet, eventually, I'd be putting stones back in. But this time, it wouldn't be random. It would be Sub-base Type 1. Compacted. Structured. Solid. Every piece working together for strength and stability.</p>
+
+        <p class="hard-line">That hit me hard. Because that's exactly what I was doing with my own life. Breaking everything down. So I could rebuild it properly.</p>
+
+        <p>That basketball court became a metaphor for everything. Resilience. Rebuilding. Bouncing back.</p>
+
+        <p>Within six months, I'd done the same with my work:</p>
+
+        <ul class="about-list">
+          <li>Completed the WMintel AI Programme at Netcom Training (Levels 100&ndash;300)</li>
+          <li>Built and shipped seven AI products across legal tech, banking, travel, retail, B2B sales, customer retention and entertainment</li>
+          <li>Designed and deployed AI agents, cloud infrastructure, payment systems and live websites</li>
+          <li>Studied Machine Learning, Deep Learning, Generative AI, Computer Vision, NLP and Prompt Engineering</li>
+        </ul>
+
+        <p class="closing-line">This site is what came out of all that.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====== WORK ====== -->
+  <section class="work" id="work">
+    <div class="container">
+      <div class="section-header">
+        <div class="label">02 — Selected Work</div>
+        <h2 class="fade-up">Seven live products. Different sectors, same approach.</h2>
+      </div>
+
+      <div class="work-grid">
+
+        <!-- Clara Disputes -->
+        <article class="product-card fade-up">
+          <div class="product-meta">
+            <span class="product-status">Live</span>
+            <span class="product-sector">Legal Tech</span>
+          </div>
+          <h3 class="product-name">Clara Disputes</h3>
+          <p class="product-tagline">For UK freelancers and small businesses chasing unpaid invoices.</p>
+          <p class="product-description">£26 billion sits unpaid across UK businesses at any given time. Most never formally chase because legal help is too expensive, too slow, too intimidating. Clara generates a Letter Before Action in minutes, for £19.99. Solicitor-grade language without the solicitor cost.</p>
+          <div class="product-footer">
+            <a href="https://claradisputes.co.uk" target="_blank" rel="noopener" class="product-link">Visit Clara</a>
+          </div>
+        </article>
+
+        <!-- Sortd -->
+        <article class="product-card fade-up">
+          <div class="product-meta">
+            <span class="product-status">Live</span>
+            <span class="product-sector">Travel</span>
+          </div>
+          <h3 class="product-name">Sortd</h3>
+          <p class="product-tagline">An AI holiday matcher for independent travel agents.</p>
+          <p class="product-description">Independent travel agents lose 24/7 enquiries to bigger online booking sites. Sortd sits on their website, qualifies every enquiry, recommends three best-fit holidays, and delivers a structured lead summary straight to the agent's inbox &mdash; while they sleep.</p>
+          <div class="product-footer">
+            <a href="https://trysortd.co.uk" target="_blank" rel="noopener" class="product-link">Visit Sortd</a>
+          </div>
+        </article>
+
+        <!-- Sybil -->
+        <article class="product-card fade-up">
+          <div class="product-meta">
+            <span class="product-status">Live</span>
+            <span class="product-sector">Banking & Financial Services</span>
+          </div>
+          <h3 class="product-name">Sybil</h3>
+          <p class="product-tagline">FCA-aligned customer support for small banks and building societies.</p>
+          <p class="product-description">Smaller institutions want better customer experiences but can't afford to build them. Sybil is a support and triage layer aligned with FCA Consumer Duty &mdash; intelligent enough to help, disciplined enough to know its boundaries, and deployed without touching core banking systems.</p>
+          <div class="product-footer">
+            <a href="https://sybil-landing-ten.vercel.app" target="_blank" rel="noopener" class="product-link">Visit Sybil</a>
+          </div>
+        </article>
+
+        <!-- Ria -->
+        <article class="product-card fade-up">
+          <div class="product-meta">
+            <span class="product-status">Live</span>
+            <span class="product-sector">E-commerce</span>
+          </div>
+          <h3 class="product-name">Ria</h3>
+          <p class="product-tagline">A 24/7 branded support agent for growing online retailers.</p>
+          <p class="product-description">Too big to manage support manually. Too small for enterprise software. Ria handles the everyday questions &mdash; orders, returns, sizing, faults &mdash; on brand and instantly. Every conversation logged. Weekly intelligence summary delivered. Built for the space in between.</p>
+          <div class="product-footer">
+            <a href="https://ria-landing-5fpqqd97j-williamssivarto-9661s-projects.vercel.app" target="_blank" rel="noopener" class="product-link">Visit Ria</a>
+          </div>
+        </article>
+
+        <!-- Prospex -->
+        <article class="product-card fade-up">
+          <div class="product-meta">
+            <span class="product-status">Live</span>
+            <span class="product-sector">B2B Sales</span>
+          </div>
+          <h3 class="product-name">Prospex</h3>
+          <p class="product-tagline">Cold outreach, finally done right.</p>
+          <p class="product-description">Prospex reads each prospect, researches their company, identifies pain points and writes a personalised cold email tailored to your offering. No templates, no generic copy. Built for sales teams, agencies and recruiters who need volume without sacrificing relevance.</p>
+          <div class="product-footer">
+            <a href="https://prospex-landing.vercel.app" target="_blank" rel="noopener" class="product-link">Visit Prospex</a>
+          </div>
+        </article>
+
+        <!-- ChurnGuard -->
+        <article class="product-card fade-up">
+          <div class="product-meta">
+            <span class="product-status">Live</span>
+            <span class="product-sector">Customer Retention</span>
+          </div>
+          <h3 class="product-name">ChurnGuard</h3>
+          <p class="product-tagline">An automated early-warning system for SaaS customer churn.</p>
+          <p class="product-description">ChurnGuard watches for the quiet signals &mdash; failed payments, login drop-offs, usage decline &mdash; and writes a warm, personalised recovery email to each at-risk customer. Delivered through SendGrid, with Slack alerts to your team. Built for SaaS companies that can&apos;t afford to lose customers to bad timing.</p>
+          <div class="product-footer">
+            <a href="#" target="_blank" rel="noopener" class="product-link">Available on request</a>
+          </div>
+        </article>
+
+        <!-- Snarkify -->
+        <article class="product-card fade-up">
+          <div class="product-meta">
+            <span class="product-status">Live</span>
+            <span class="product-sector">Entertainment &middot; Voice AI</span>
+          </div>
+          <h3 class="product-name">Snarkify</h3>
+          <p class="product-tagline">An AI roast engine that speaks its burns out loud.</p>
+          <p class="product-description">Snarkify doesn&apos;t just write roasts &mdash; it speaks them. Pick a flavour &mdash; Savage, Gamer, Mock Sympathy, Yo Mama and more &mdash; name a target, and it fires back a fresh AI-generated roast in a robotic vocoder voice, right in the browser. It began as my very first AI project &mdash; now rebuilt from the ground up as a web app.</p>
+          <div class="product-footer">
+            <a href="https://snarkify-rust.vercel.app" target="_blank" rel="noopener" class="product-link">Visit Snarkify</a>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ====== CURRENTLY ====== -->
+  <section class="currently" id="currently">
+    <div class="container">
+      <div class="section-header">
+        <div class="label">03 — Now</div>
+        <h2 class="fade-up">What I'm working on, today.</h2>
+      </div>
+
+      <div class="currently-content fade-up">
+        <p class="currently-title">The work I've shipped is built. The work I'm doing now is <em>distribution</em>.</p>
+
+        <div class="currently-prose">
+          <p>Building has been the easier part. Seven products live, none yet with paying customers. The gap I&apos;m working on closing is the one between <strong>building well</strong> and <strong>being found</strong>.</p>
+
+          <p>For the next stretch, my focus is on bringing Clara Disputes to its first paying customers &mdash; finding the right channel, the right voice, and the right rhythm of consistent execution. The other products continue to evolve in the background, but Clara is where the energy is right now.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====== CONTACT ====== -->
+  <section class="contact" id="contact">
+    <div class="container">
+      <div class="contact-grid">
+        <div class="contact-left">
+          <span class="eyebrow">04 — Get in touch</span>
+          <h2 class="contact-heading fade-up">If anything here is <em>useful</em> to you, let's talk.</h2>
+          <p class="contact-intro">Open to conversations about any of the products, collaborations on AI in regulated industries, or talking to other UK practitioners building outside the venture capital model.</p>
+
+          <ul class="contact-channels">
+            <li>
+              <a href="mailto:williamssivarto@gmail.com">
+                <span class="channel-label">Email</span>
+                <span class="channel-value">williamssivarto@gmail.com</span>
+              </a>
+            </li>
+            <li>
+              <a href="https://www.linkedin.com/in/colin-williams-ai" target="_blank" rel="noopener">
+                <span class="channel-label">LinkedIn</span>
+                <span class="channel-value">Colin Williams →</span>
+              </a>
+            </li>
+            <li>
+              <a href="https://github.com/williamssivarto-jpg" target="_blank" rel="noopener">
+                <span class="channel-label">GitHub</span>
+                <span class="channel-value">williamssivarto →</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+
+        <div class="contact-right">
+          <form class="contact-form fade-up" action="https://formspree.io/f/xpqeqwdv" method="POST">
+            <div class="form-row">
+              <label for="name">Your name</label>
+              <input type="text" id="name" name="name" required>
+            </div>
+            <div class="form-row">
+              <label for="email">Your email</label>
+              <input type="email" id="email" name="email" required>
+            </div>
+            <div class="form-row">
+              <label for="subject">Subject</label>
+              <input type="text" id="subject" name="subject">
+            </div>
+            <div class="form-row">
+              <label for="message">Message</label>
+              <textarea id="message" name="message" rows="5" required></textarea>
+            </div>
+            <button type="submit" class="form-submit">Send Message</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====== FOOTER ====== -->
+  <footer>
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-name">Colin Williams &middot; AI Builder &middot; Wolverhampton, UK</div>
+        <div>&copy; 2026 &middot; Built by hand</div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Fade-up animations on scroll
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -80px 0px' });
+
+    document.querySelectorAll('.fade-up').forEach(el => {
+      observer.observe(el);
+    });
+  </script>
+
+</body>
+</html>
