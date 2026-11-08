@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="en-GB" class="no-js">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Colin Williams — Practical AI for UK schools and small businesses</title>
+  <meta name="description" content="Colin Williams builds practical AI tools for UK schools and small businesses — including Illusum for GCSE maths and Sortd for independent travel agents. Thirty years in security, now building AI.">
+  <meta name="theme-color" content="#0F1113">
+  <link rel="canonical" href="https://colinwilliams.space/">
+  <meta property="og:title" content="Colin Williams — Practical AI for UK schools and small businesses">
+  <meta property="og:description" content="Practical AI tools for UK schools and small businesses. Illusum for GCSE maths, Sortd for independent travel agents, and more.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://colinwilliams.space/">
+  <meta property="og:image" content="https://colinwilliams.space/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Colin Williams. Practical AI tools for UK schools and small businesses.">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23F0B44C'/%3E%3Ctext x='32' y='41' font-family='Georgia,serif' font-size='28' text-anchor='middle' fill='%230F1113'%3ECW%3C/text%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0F1113; --bg-2: #14171A; --surface: #191C20; --text: #EEEAE3; --text-2: #C3C1BC; --muted: #9EA2A8;
+      --accent: #F0B44C; --accent-2: #F6C875; --on-accent: #17130B; --line: rgba(238,234,227,.12); --line-2: rgba(238,234,227,.06);
+      --shadow: 0 40px 70px -30px rgba(0,0,0,.75), 0 12px 24px -14px rgba(0,0,0,.6);
+      --plate-mix: 26%; --nav-bg: rgba(15,17,19,.78);
+      --display: 'Instrument Serif', Georgia, serif; --body: 'Inter', system-ui, sans-serif; --mono: 'IBM Plex Mono', ui-monospace, monospace;
+      --display-weight: 400; --display-italic: italic; --h1-track: -0.02em; --body-size: 17px;
+      --wrap: 1200px; --gutter: clamp(20px, 4vw, 48px);
+    }
+    *, *::before, *::after { box-sizing: border-box; }
+    html { scroll-behavior: smooth; scroll-padding-top: 80px; }
+    body { margin: 0; background: var(--bg); color: var(--text); font-family: var(--body); font-size: var(--body-size); line-height: 1.6;
+      -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+    img { max-width: 100%; display: block; }
+    a { color: var(--accent); }
+    :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 4px; }
+    .wrap { width: 100%; max-width: var(--wrap); margin: 0 auto; padding: 0 var(--gutter); }
+    .label { font-family: var(--mono); font-size: 12px; letter-spacing: .16em; text-transform: uppercase; color: var(--muted); }
+    h1, h2, h3 { font-family: var(--display); font-weight: var(--display-weight); margin: 0; color: var(--text); }
+    em.accent { color: var(--accent); font-style: var(--display-italic); }
+
+    /* ---------- nav ---------- */
+    .nav { position: fixed; inset: 0 0 auto 0; z-index: 50; transition: background .3s, border-color .3s, backdrop-filter .3s; border-bottom: 1px solid transparent; }
+    .nav.scrolled { background: var(--nav-bg); backdrop-filter: saturate(140%) blur(12px); -webkit-backdrop-filter: saturate(140%) blur(12px); border-bottom-color: var(--line); }
+    .nav .wrap { display: flex; align-items: center; justify-content: space-between; height: 68px; }
+    .brand { font-family: var(--mono); font-weight: 500; font-size: 14px; letter-spacing: .08em; color: var(--text); text-decoration: none; display: inline-flex; align-items: center; gap: 10px; min-height: 44px; }
+    .brand b { width: 30px; height: 30px; border-radius: 8px; background: var(--accent); color: var(--on-accent); display: grid; place-items: center; font-size: 12px; letter-spacing: .02em; }
+    .nav-links { display: flex; gap: 6px; list-style: none; margin: 0; padding: 0; }
+    .nav-links a { font-family: var(--mono); font-size: 12px; letter-spacing: .14em; text-transform: uppercase; color: var(--text-2); text-decoration: none; padding: 0 12px; min-height: 44px; display: inline-flex; align-items: center; border-radius: 8px; }
+    .nav-links a:hover { color: var(--accent); }
+    .nav-links a.contact { border: 1px solid var(--line); }
+    .menu-btn { display: none; background: none; border: 1px solid var(--line); color: var(--text); width: 44px; height: 44px; border-radius: 10px; cursor: pointer; }
+    .menu-btn svg { display: block; margin: auto; }
+    @media (max-width: 760px) {
+      .menu-btn { display: block; }
+      .nav-links { position: fixed; inset: 68px 0 auto 0; flex-direction: column; gap: 0; padding: 8px var(--gutter) 20px; background: var(--bg); border-bottom: 1px solid var(--line);
+        transform: translateY(-8px); opacity: 0; pointer-events: none; transition: .2s; }
+      .nav.open .nav-links { transform: none; opacity: 1; pointer-events: auto; }
+      .nav.open { background: var(--bg); }
+      .nav-links a { font-size: 14px; padding: 0 4px; min-height: 52px; border-bottom: 1px solid var(--line-2); border-radius: 0; }
+      .nav-links a.contact { border: 0; border-bottom: 1px solid var(--line-2); }
+    }
+
+    /* ---------- hero ---------- */
+    .hero { padding: 140px 0 90px; position: relative; }
+    .hero-grid { display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, .95fr); gap: clamp(32px, 5vw, 72px); align-items: center; }
+    .hero-meta { display: flex; gap: 28px; margin-bottom: 32px; }
+    .hero-meta span { display: block; }
+    .hero-meta .v { font-family: var(--mono); font-size: 13px; color: var(--text-2); margin-top: 4px; letter-spacing: .03em; }
+    .hero h1 { font-size: clamp(64px, 9.5vw, 136px); line-height: .92; letter-spacing: var(--h1-track); font-weight: 300; }
+    .hero h1 .dot { color: var(--accent); }
+    .hero-tagline { font-family: var(--display); font-style: italic; font-size: clamp(21px, 2.1vw, 27px); line-height: 1.45; color: var(--text-2); max-width: 34ch; margin: 28px 0 0; }
+    .hero-tagline em { color: var(--accent); }
+    .ctas { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 36px; }
+    .btn { display: inline-flex; align-items: center; gap: 10px; min-height: 52px; padding: 0 24px; border-radius: 999px; font-family: var(--mono); font-size: 12px; letter-spacing: .14em; text-transform: uppercase; text-decoration: none; transition: transform .2s, background .2s, color .2s; }
+    .btn.primary { background: var(--accent); color: var(--on-accent); }
+    .btn.primary:hover { background: var(--accent-2); transform: translateY(-2px); }
+    .btn.ghost { border: 1px solid var(--line); color: var(--text); }
+    .btn.ghost:hover { border-color: var(--accent); color: var(--accent); }
+    .stats { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); margin-top: 52px; border-top: 1px solid var(--line); max-width: 560px; }
+    .stat { padding: 18px 16px 0 0; }
+    .stat + .stat { padding-left: 18px; border-left: 1px solid var(--line); }
+    .stat-num { display: block; font-family: var(--display); font-size: clamp(38px, 4.4vw, 56px); line-height: 1; font-weight: 300; }
+    .stat .label { display: block; margin-top: 8px; font-size: 11px; }
+
+    .deck { position: relative; aspect-ratio: 1 / 0.92; perspective: 1400px; }
+    .deck .plate { position: absolute; width: 74%; padding: 14px; transition: transform .6s cubic-bezier(.2,.7,.2,1); }
+    .deck .d1 { left: 0; top: 4%; transform: rotate(-6deg); z-index: 1; }
+    .deck .d2 { right: 0; top: 0; transform: rotate(4deg); z-index: 2; }
+    .deck .d3 { left: 13%; bottom: 0; transform: rotate(-1.5deg); z-index: 3; }
+    .deck:hover .d1 { transform: rotate(-9deg) translate(-12px, -6px); }
+    .deck:hover .d2 { transform: rotate(7deg) translate(12px, -10px); }
+    .deck:hover .d3 { transform: rotate(0deg) translateY(6px); }
+    .deck-inner { position: absolute; inset: 0; transition: transform .25s ease-out; transform-style: preserve-3d; }
+
+    /* ---------- frames ---------- */
+    .plate { background: color-mix(in srgb, var(--brand) var(--plate-mix), var(--surface)); border-radius: 16px; padding: clamp(14px, 2.4vw, 26px); }
+    .frame { border-radius: 10px; overflow: hidden; background: #0b0d10; box-shadow: var(--shadow); transition: transform .5s cubic-bezier(.2,.7,.2,1); }
+    .frame-bar { display: flex; align-items: center; gap: 6px; height: 28px; padding: 0 12px; background: #1b1e23; color: #9aa0a6; font: 11px/1 var(--mono); letter-spacing: .02em; }
+    .frame-bar i { width: 9px; height: 9px; border-radius: 50%; background: #3a3f46; flex: none; }
+    .frame-bar i:nth-child(1) { background: #ef5f57; } .frame-bar i:nth-child(2) { background: #f5bd2f; } .frame-bar i:nth-child(3) { background: #28c840; }
+    .frame-bar span { margin-left: 8px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .frame-view { aspect-ratio: 16 / 10; overflow: hidden; background: #0b0d10; }
+    .frame-view img { width: 100%; height: 100%; object-fit: cover; object-position: top center; transition: transform .9s cubic-bezier(.2,.7,.2,1); }
+    .card:hover .frame, .feature:hover .frame { transform: translateY(-6px); }
+    .card:hover .frame-view img, .feature:hover .frame-view img { transform: scale(1.035); }
+    .frame-graphic { width: 100%; height: 100%; display: grid; place-items: center; background: color-mix(in srgb, var(--brand) 12%, #101317); }
+    .graphic { width: 62%; height: auto; }
+    .g-light { fill: #f0d9b5; } .g-dark { fill: #b58863; }
+    .g-piece { font-size: 46px; fill: #fff; stroke: #222; stroke-width: 1.2px; paint-order: stroke; }
+    .g-piece-b { fill: #1a1a1a; stroke: #f0d9b5; }
+    .churn { width: 78%; } .g-grid { stroke: rgba(255,255,255,.08); stroke-width: 1; fill: none; }
+    .g-line { fill: none; stroke: #E0664A; stroke-width: 4; stroke-linecap: round; stroke-dasharray: 1; stroke-dashoffset: 1; transition: stroke-dashoffset 2s ease .3s; }
+    .visible .g-line, .card.visible .g-line { stroke-dashoffset: 0; }
+    .g-dot { fill: #E0664A; } .g-mail { fill: none; stroke: #f3f3f3; stroke-width: 2; } .g-mail-flap { fill: none; stroke: #f3f3f3; stroke-width: 2; }
+
+    /* ---------- sections ---------- */
+    section { position: relative; }
+    .sec { padding: clamp(80px, 10vw, 128px) 0; }
+    .sec.alt { background: var(--bg-2); border-block: 1px solid var(--line); }
+    .sec-head { display: grid; grid-template-columns: 220px minmax(0, 1fr); gap: 40px; align-items: baseline; margin-bottom: clamp(44px, 6vw, 72px); }
+    .sec-head h2 { font-size: clamp(36px, 5vw, 62px); line-height: 1.05; letter-spacing: -0.03em; max-width: 20ch; }
+    .sec-head p { margin: 18px 0 0; color: var(--text-2); max-width: 56ch; }
+    @media (max-width: 860px) { .sec-head { grid-template-columns: 1fr; gap: 14px; } }
+
+    /* story */
+    .prose { max-width: 660px; margin: 0 auto; font-size: calc(var(--body-size) + 2px); line-height: 1.7; }
+    .prose p { margin: 0 0 22px; }
+    .prose .lead { font-family: var(--display); font-size: clamp(28px, 3.2vw, 40px); line-height: 1.2; margin-bottom: 40px; }
+    .prose .hard { font-family: var(--display); font-style: italic; font-size: clamp(23px, 2.4vw, 28px); line-height: 1.4; color: var(--accent); padding: 18px 0; border-block: 1px solid var(--line); margin: 30px 0; }
+    .prose ul { list-style: none; padding: 0; margin: 24px 0 32px; }
+    .prose li { display: flex; gap: 14px; padding: 13px 0; border-bottom: 1px solid var(--line-2); font-size: var(--body-size); }
+    .prose li::before { content: '—'; color: var(--accent); flex: none; }
+    .prose .closing { font-family: var(--display); font-style: italic; font-size: clamp(22px, 2.4vw, 28px); color: var(--text-2); border-top: 1px solid var(--line); padding-top: 28px; margin-top: 40px; }
+    figure.court { margin: 44px 0; }
+    figure.court svg { width: 100%; height: auto; display: block; }
+    .court .draw { fill: none; stroke: var(--accent); stroke-width: 1.6; stroke-linecap: round; stroke-dasharray: 1; stroke-dashoffset: 1; transition: stroke-dashoffset 2.2s cubic-bezier(.6,.1,.2,1); }
+    .court .draw.base { stroke: var(--muted); stroke-width: 1; }
+    .court.visible .draw { stroke-dashoffset: 0; }
+    .court figcaption { margin-top: 14px; text-align: center; }
+
+    /* features */
+    .features { display: flex; flex-direction: column; gap: clamp(64px, 9vw, 120px); }
+    .feature { display: grid; grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr); gap: clamp(32px, 5vw, 72px); align-items: center; }
+    .feature.reverse .feature-text { order: 2; }
+    .feature-name { font-size: clamp(40px, 4.6vw, 60px); line-height: 1; letter-spacing: -0.03em; margin: 18px 0 14px; }
+    .tagline { font-family: var(--display); font-style: italic; font-size: clamp(20px, 1.8vw, 23px); line-height: 1.4; color: var(--text-2); margin: 0 0 18px; }
+    .tagline.small { font-size: 18px; margin-bottom: 14px; }
+    .desc { color: var(--text-2); margin: 0 0 22px; }
+    .tags { list-style: none; display: flex; flex-wrap: wrap; gap: 8px; padding: 0; margin: 0 0 28px; }
+    .tags li { font-family: var(--mono); font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: var(--text-2); border: 1px solid var(--line); border-radius: 999px; padding: 7px 12px; }
+    @media (max-width: 900px) { .feature { grid-template-columns: 1fr; } .feature.reverse .feature-text { order: 0; } .feature .plate { order: -1; } }
+
+    .meta { display: flex; justify-content: space-between; gap: 16px; align-items: center; }
+    .status, .sector { font-family: var(--mono); font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); }
+    .status { display: inline-flex; align-items: center; gap: 9px; color: var(--text-2); }
+    .status::before { content: ''; width: 7px; height: 7px; border-radius: 50%; background: var(--accent); animation: pulse 2.6s ease-out infinite; }
+    .status.muted::before { background: var(--muted); animation: none; }
+    @keyframes pulse { 0% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--accent) 50%, transparent); } 70%, 100% { box-shadow: 0 0 0 8px transparent; } }
+    .cta-link { display: inline-flex; align-items: center; gap: 10px; min-height: 44px; font-family: var(--mono); font-size: 12px; letter-spacing: .14em; text-transform: uppercase; color: var(--accent); text-decoration: none; }
+    .cta-link span { transition: transform .2s; }
+    .cta-link:hover span { transform: translateX(5px); }
+    .cta-link.off { color: var(--muted); }
+
+    /* grid */
+    .grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(20px, 2.4vw, 32px); }
+    .grid.two { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .card { display: flex; flex-direction: column; background: var(--surface); border: 1px solid var(--line-2); border-radius: 20px; overflow: hidden; transition: border-color .3s; }
+    .card:hover { border-color: var(--line); }
+    .card .plate { border-radius: 0; }
+    .card-body { padding: 22px 24px 18px; display: flex; flex-direction: column; flex: 1; }
+    .card-name { font-size: clamp(28px, 2.6vw, 34px); line-height: 1.05; margin: 14px 0 8px; letter-spacing: -0.02em; }
+    .more { margin: 0 0 8px; }
+    .more summary { cursor: pointer; list-style: none; font-family: var(--mono); font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); min-height: 36px; display: inline-flex; align-items: center; gap: 8px; }
+    .more summary::-webkit-details-marker { display: none; }
+    .more summary::after { content: '+'; font-size: 14px; }
+    .more[open] summary::after { content: '−'; }
+    .more .desc { font-size: calc(var(--body-size) - 2px); margin: 6px 0 4px; }
+    .card .cta-link { margin-top: auto; }
+    @media (max-width: 1000px) { .grid, .grid.two { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+    @media (max-width: 640px) { .grid, .grid.two { grid-template-columns: 1fr; } }
+
+    /* now */
+    .now-title { font-family: var(--display); font-size: clamp(30px, 3.6vw, 46px); line-height: 1.15; letter-spacing: -0.02em; max-width: 22ch; margin: 0 0 24px; }
+    .now-intro { color: var(--text-2); max-width: 60ch; margin: 0 0 40px; }
+    .status-board { list-style: none; padding: 0; margin: 0; border-top: 1px solid var(--line); }
+    .status-row { display: grid; grid-template-columns: 150px minmax(0, 1fr); gap: 24px; align-items: baseline; padding: 24px 0; border-bottom: 1px solid var(--line); }
+    .status-row strong { font-family: var(--display); font-weight: var(--display-weight); font-size: 26px; display: block; }
+    .status-row p { margin: 4px 0 0; color: var(--text-2); }
+    .pill { justify-self: start; font-family: var(--mono); font-size: 11px; letter-spacing: .12em; text-transform: uppercase; padding: 7px 12px; border-radius: 999px; border: 1px solid var(--line); color: var(--text-2); display: inline-flex; align-items: center; gap: 8px; }
+    .pill::before { content: ''; width: 7px; height: 7px; border-radius: 50%; }
+    .pill.active::before { background: var(--accent); } .pill.testing::before { background: #5B8DEF; } .pill.ready::before { background: #3FB07A; }
+    @media (max-width: 640px) { .status-row { grid-template-columns: 1fr; gap: 10px; } }
+
+    /* contact */
+    .contact-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: clamp(40px, 7vw, 96px); }
+    .contact h2 { font-size: clamp(40px, 5vw, 64px); line-height: 1.05; letter-spacing: -0.03em; margin: 18px 0 24px; }
+    .contact-intro { color: var(--text-2); margin: 0 0 36px; max-width: 46ch; }
+    .channels { list-style: none; padding: 0; margin: 0; border-top: 1px solid var(--line); }
+    .channels a { display: flex; justify-content: space-between; align-items: center; min-height: 64px; color: var(--text); text-decoration: none; border-bottom: 1px solid var(--line); gap: 16px; }
+    .channels a:hover { color: var(--accent); }
+    .channels .v { text-align: right; overflow-wrap: anywhere; }
+    form { display: flex; flex-direction: column; gap: 22px; }
+    .field { display: flex; flex-direction: column; gap: 8px; }
+    .field input, .field textarea { background: transparent; border: 0; border-bottom: 1px solid var(--line); padding: 12px 0; font: inherit; color: var(--text); min-height: 48px; }
+    .field textarea { resize: vertical; min-height: 120px; }
+    .field input:focus, .field textarea:focus { outline: none; border-bottom-color: var(--accent); }
+    form .btn { align-self: flex-start; border: 0; cursor: pointer; }
+    @media (max-width: 860px) { .contact-grid { grid-template-columns: 1fr; } }
+
+    footer { border-top: 1px solid var(--line); padding: 32px 0; background: var(--bg-2); }
+    footer .wrap { display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+
+    /* motion */
+    .fade-up { opacity: 0; transform: translateY(22px); transition: opacity .8s ease, transform .8s cubic-bezier(.2,.7,.2,1); }
+    .fade-up.visible { opacity: 1; transform: none; }
+    .no-js .fade-up { opacity: 1; transform: none; }
+
+    @media (max-width: 900px) {
+      .hero { padding: 116px 0 64px; }
+      .hero-grid { grid-template-columns: 1fr; }
+      .deck { max-width: 520px; width: 100%; margin: 12px auto 0; }
+    }
+    @media (max-width: 480px) {
+      .hero h1 { font-size: 64px; }
+      .stat + .stat { padding-left: 12px; }
+      .deck .plate { padding: 8px; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+      .fade-up { opacity: 1; transform: none; }
+      .court .draw, .g-line { stroke-dashoffset: 0; }
+    }
+
+    /* ---------- additions ---------- */
+    .feature-ctas { display: flex; flex-wrap: wrap; gap: 8px 28px; align-items: center; }
+    .cta-link.quiet { color: var(--text-2); }
+    .cta-link.quiet:hover { color: var(--accent); }
+    .lab-note { margin: clamp(40px, 5vw, 56px) 0 0; padding-top: 28px; border-top: 1px solid var(--line); display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px 24px; align-items: center; color: var(--text-2); }
+    .lab-note p { margin: 0; }
+    .pill { white-space: nowrap; }
+    @media (max-width: 760px) { .menu-btn { margin-left: auto; } }
+    .status-row { grid-template-columns: 180px minmax(0, 1fr); }
+    @media (max-width: 640px) { .status-row { grid-template-columns: 1fr; } }
+    footer a { color: var(--text-2); text-decoration: none; }
+    footer a:hover { color: var(--accent); }
+    footer .foot-links { display: flex; gap: 24px; flex-wrap: wrap; }
+    .page-head { padding: 150px 0 clamp(48px, 6vw, 72px); }
+    .page-head h1 { font-size: clamp(56px, 8vw, 112px); line-height: .95; letter-spacing: var(--h1-track); font-weight: 300; margin: 18px 0 22px; }
+    .page-head h1 .dot { color: var(--accent); }
+    .page-head p { color: var(--text-2); max-width: 58ch; margin: 0; font-size: calc(var(--body-size) + 1px); }
+    @media (max-width: 900px) { .page-head { padding-top: 118px; } }
+</style>
+</head>
+<body>
+  <header class="nav">
+    <div class="wrap">
+      <a class="brand" href="#top"><b>CW</b>Colin Williams</a>
+      <button class="menu-btn" aria-label="Menu" aria-expanded="false"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+      <nav aria-label="Main"><ul class="nav-links">
+        <li><a href="#work">Work</a></li><li><a href="#story">Story</a></li><li><a href="#now">Now</a></li><li><a class="contact" href="#contact">Contact</a></li>
+      </ul></nav>
+    </div>
+  </header>
+
+  <main id="top">
+    <section class="hero">
+      <div class="wrap hero-grid">
+        <div>
+          <div class="hero-meta"><div><span class="label">Building since</span><span class="v">2024</span></div><div><span class="label">Based in</span><span class="v">Wolverhampton, UK</span></div></div>
+          <h1>Colin<br>Williams<span class="dot">.</span></h1>
+          <p class="hero-tagline">Practical AI tools for <em>UK schools</em> and small businesses. Built with the discipline of thirty years in security.</p>
+          <div class="ctas"><a class="btn primary" href="#work">See the work <span aria-hidden="true">&darr;</span></a><a class="btn ghost" href="#contact">Get in touch</a></div>
+          <div class="stats" aria-label="At a glance">
+            <div class="stat"><span class="stat-num" data-count="30">30</span><span class="label">Years in security</span></div>
+            <div class="stat"><span class="stat-num" data-count="7">7</span><span class="label">Products live</span></div>
+            <div class="stat"><span class="stat-num">1</span><span class="label">Rebuild</span></div>
+          </div>
+        </div>
+        <div class="deck" aria-hidden="true"><div class="deck-inner"><div class="plate d1" style="--brand:#C9A646">
+          <div class="frame">
+            <div class="frame-bar" aria-hidden="true"><i></i><i></i><i></i><span>claradisputes.co.uk</span></div>
+            <div class="frame-view"><img src="clara.webp" alt="Clara landing page: &#x27;Chase what you&#x27;re owed&#x27; beside a chat about an unpaid invoice" width="1000" height="625" loading="eager" decoding="async"></div>
+          </div>
+        </div><div class="plate d2" style="--brand:#1FA67A">
+          <div class="frame">
+            <div class="frame-bar" aria-hidden="true"><i></i><i></i><i></i><span>trysortd.co.uk</span></div>
+            <div class="frame-view"><img src="sortd.webp" alt="Sortd live demo: the holiday matcher asks who is travelling" width="1000" height="625" loading="eager" decoding="async"></div>
+          </div>
+        </div><div class="plate d3" style="--brand:#1F5C4A">
+          <div class="frame">
+            <div class="frame-bar" aria-hidden="true"><i></i><i></i><i></i><span>illusum.co.uk</span></div>
+            <div class="frame-view"><img src="illusum.webp" alt="Illusum home screen: Nova the AI maths guide offering three ways to start, above topic cards" width="1000" height="625" loading="eager" decoding="async"></div>
+          </div>
+        </div></div></div>
+      </div>
+    </section>
+
+    <section class="sec" id="work">
+      <div class="wrap">
+        <div class="sec-head"><span class="label">01 — Selected work</span><div><h2 class="fade-up">Two products, ready for their first partners.</h2><p>Each one solves one real problem for one kind of customer. Both are live, and you can try them today.</p></div></div>
+        <div class="features">
+      <article class="feature fade-up" id="illusum">
+        <div class="feature-text">
+          <div class="meta"><span class="status">Live &middot; School pilots open</span><span class="sector">Education</span></div>
+          <h3 class="feature-name">Illusum</h3>
+          <p class="tagline">GCSE maths tricks that make numbers less scary.</p>
+          <p class="desc">Built after my daughter failed her maths re-sit. Short, memorable methods across the GCSE topics, unlimited practice where every answer is worked out by code, and Nova &mdash; an AI guide that is clearly labelled as AI, gives hints before answers, stays on maths and signposts real help if a student is struggling. Made for teenagers who find maths hard, and for the parents and schools supporting them.</p>
+          <ul class="tags"><li>16 topics</li><li>93 methods</li><li>Answers checked by code</li><li>Safeguarding built in</li></ul>
+          <div class="feature-ctas"><a class="cta-link" href="https://illusum.co.uk" target="_blank" rel="noopener">Visit Illusum<span aria-hidden="true">&rarr;</span></a><a class="cta-link quiet" href="#contact">Ask about a school pilot<span aria-hidden="true">&rarr;</span></a></div>
+        </div>
+        <div class="plate big" style="--brand:#1F5C4A">
+          <div class="frame">
+            <div class="frame-bar" aria-hidden="true"><i></i><i></i><i></i><span>illusum.co.uk</span></div>
+            <div class="frame-view"><img src="illusum.webp" alt="Illusum home screen: Nova the AI maths guide offering three ways to start, above topic cards" width="1000" height="625" loading="lazy" decoding="async"></div>
+          </div>
+        </div>
+      </article>
+      <article class="feature fade-up reverse" id="sortd">
+        <div class="feature-text">
+          <div class="meta"><span class="status">Live &middot; Taking first partners</span><span class="sector">Travel</span></div>
+          <h3 class="feature-name">Sortd</h3>
+          <p class="tagline">An AI holiday matcher for independent travel agents.</p>
+          <p class="desc">Independent agents lose evening and weekend enquiries to the big online booking sites. Sortd sits on the agent's own website, asks every visitor the right questions, recommends three best-fit holidays, and sends a structured lead summary &mdash; budget, priorities, deal-breakers, best time to call &mdash; straight to the agent's inbox. The agent wakes up to warm leads, not missed ones.</p>
+          <ul class="tags"><li>£495 setup</li><li>£149 / month</li><li>24/7 enquiry capture</li><li>Lead summaries by email</li></ul>
+          <div class="feature-ctas"><a class="cta-link" href="https://trysortd.co.uk" target="_blank" rel="noopener">Try the live demo<span aria-hidden="true">&rarr;</span></a><a class="cta-link quiet" href="#contact">Book a walkthrough<span aria-hidden="true">&rarr;</span></a></div>
+        </div>
+        <div class="plate big" style="--brand:#1FA67A">
+          <div class="frame">
+            <div class="frame-bar" aria-hidden="true"><i></i><i></i><i></i><span>trysortd.co.uk</span></div>
+            <div class="frame-view"><img src="sortd.webp" alt="Sortd live demo: the holiday matcher asks who is travelling" width="1000" height="625" loading="lazy" decoding="async"></div>
+          </div>
+        </div>
+      </article></div>
+        <div class="sec-head" style="margin-top: clamp(80px, 10vw, 128px)"><span class="label">More products</span><div><h2 class="fade-up">Five more, each solving one problem well.</h2></div></div>
+        <div class="grid">
+        <article class="card fade-up" id="clara">
+          <div class="plate" style="--brand:#C9A646">
+          <div class="frame">
+            <div class="frame-bar" aria-hidden="true"><i></i><i></i><i></i><span>claradisputes.co.uk</span></div>
+            <div class="frame-view"><img src="clara.webp" alt="Clara landing page: &#x27;Chase what you&#x27;re owed&#x27; beside a chat about an unpaid invoice" width="1000" height="625" loading="lazy" decoding="async"></div>
+          </div>
+        </div>
+          <div class="card-body">
+            <div class="meta"><span class="status">Live</span><span class="sector">Legal Tech</span></div>
+            <h3 class="card-name">Clara Disputes</h3>
+            <p class="tagline small">A Letter Before Action for unpaid invoices, in minutes, for £19.99.</p>
+            <details class="more"><summary>More about Clara Disputes</summary><p class="desc">Many freelancers and small firms never formally chase an unpaid invoice because legal help feels too expensive, too slow and too intimidating. Clara turns your invoice details into a clear, professional Letter Before Action for England &amp; Wales, following the pre-action process. It's a document tool, not legal advice.</p></details>
+            <a class="cta-link" href="https://claradisputes.co.uk" target="_blank" rel="noopener">Visit Clara<span aria-hidden="true">&rarr;</span></a>
+          </div>
+        </article>
+        <article class="card fade-up" id="ria">
+          <div class="plate" style="--brand:#8B7CF6">
+          <div class="frame">
+            <div class="frame-bar" aria-hidden="true"><i></i><i></i><i></i><span>ria-landing.vercel.app</span></div>
+            <div class="frame-view"><img src="ria.webp" alt="Ria landing page beside a support chat about a jacket with a broken zip" width="1000" height="625" loading="lazy" decoding="async"></div>
+          </div>
+        </div>
+          <div class="card-body">
+            <div class="meta"><span class="status">Live</span><span class="sector">E-commerce</span></div>
+            <h3 class="card-name">Ria</h3>
+            <p class="tagline small">A 24/7 branded support agent for growing online retailers.</p>
+            <details class="more"><summary>More about Ria</summary><p class="desc">Too big to manage support by hand, too small for enterprise software. Ria handles the everyday questions &mdash; orders, returns, sizing, faults &mdash; in your brand voice, instantly. Every conversation is logged, and a weekly summary shows you what customers are asking about.</p></details>
+            <a class="cta-link" href="https://ria-landing.vercel.app" target="_blank" rel="noopener">Visit Ria<span aria-hidden="true">&rarr;</span></a>
+          </div>
+        </article>
+        <article class="card fade-up" id="prospex">
+          <div class="plate" style="--brand:#3B82F6">
+          <div class="frame">
+            <div class="frame-bar" aria-hidden="true"><i></i><i></i><i></i><span>prospex-landing.vercel.app</span></div>
+            <div class="frame-view"><img src="prospex.webp" alt="Prospex landing page: &#x27;Cold outreach. Finally done right.&#x27;" width="1000" height="625" loading="lazy" decoding="async"></div>
+          </div>
+        </div>
+          <div class="card-body">
+            <div class="meta"><span class="status">Live</span><span class="sector">B2B Sales</span></div>
+            <h3 class="card-name">Prospex</h3>
+            <p class="tagline small">Researched, personalised cold outreach.</p>
+            <details class="more"><summary>More about Prospex</summary><p class="desc">Prospex reads each prospect, researches their company, identifies likely pain points and drafts a personalised cold email tailored to your offer. No templates, no generic copy. Built for sales teams, agencies and recruiters who need volume without losing relevance.</p></details>
+            <a class="cta-link" href="https://prospex-landing.vercel.app" target="_blank" rel="noopener">Visit Prospex<span aria-hidden="true">&rarr;</span></a>
+          </div>
+        </article>
+        <article class="card fade-up" id="sybil">
+          <div class="plate" style="--brand:#3A3A3A">
+          <div class="frame">
+            <div class="frame-bar" aria-hidden="true"><i></i><i></i><i></i><span>sybil-landing-ten.vercel.app</span></div>
+            <div class="frame-view"><img src="sybil.webp" alt="Sybil compliance checklist and a live demo chat for a building society" width="1000" height="625" loading="lazy" decoding="async"></div>
+          </div>
+        </div>
+          <div class="card-body">
+            <div class="meta"><span class="status">Live demo</span><span class="sector">Banking</span></div>
+            <h3 class="card-name">Sybil</h3>
+            <p class="tagline small">Customer support and triage for small banks and building societies.</p>
+            <details class="more"><summary>More about Sybil</summary><p class="desc">Smaller institutions want better customer experiences but can't afford to build them. Sybil is a support and triage layer designed with FCA Consumer Duty in mind &mdash; helpful within clear boundaries, and deployed without touching core banking systems.</p></details>
+            <a class="cta-link" href="https://sybil-landing-ten.vercel.app" target="_blank" rel="noopener">Visit Sybil<span aria-hidden="true">&rarr;</span></a>
+          </div>
+        </article>
+        <article class="card fade-up" id="churnguard">
+          <div class="plate" style="--brand:#E0664A">
+          <div class="frame">
+            <div class="frame-bar" aria-hidden="true"><i></i><i></i><i></i><span>private demo</span></div>
+            <div class="frame-view"><div class="frame-graphic"><svg class="graphic churn" viewBox="0 0 320 200" aria-hidden="true">
+        <path class="g-grid" d="M20 40H300M20 90H300M20 140H300"/>
+        <path class="g-line" pathLength="1" d="M20 60 C60 58 80 64 110 80 S150 140 170 150 S200 120 215 95 S260 55 300 52"/>
+        <circle class="g-dot" cx="170" cy="150" r="5"/>
+        <rect class="g-mail" x="182" y="158" width="34" height="22" rx="3"/><path class="g-mail-flap" d="M182 160 L199 172 L216 160"/>
+      </svg></div></div>
+          </div>
+        </div>
+          <div class="card-body">
+            <div class="meta"><span class="status muted">Private demo</span><span class="sector">Retention</span></div>
+            <h3 class="card-name">ChurnGuard</h3>
+            <p class="tagline small">An early-warning system for SaaS customer churn.</p>
+            <details class="more"><summary>More about ChurnGuard</summary><p class="desc">ChurnGuard watches for the quiet signals &mdash; failed payments, login drop-offs, usage decline &mdash; and writes a warm, personalised recovery email to each at-risk customer. Delivered through SendGrid, with Slack alerts to your team.</p></details>
+            <a class="cta-link" href="#contact">Request a demo<span aria-hidden="true">&rarr;</span></a>
+          </div>
+        </article></div>
+        <div class="lab-note fade-up"><p>I also build a few things for the love of it &mdash; football, chess and more.</p><a class="cta-link" href="lab.html">Personal projects<span aria-hidden="true">&rarr;</span></a></div>
+      </div>
+    </section>
+
+    <section class="sec alt" id="story">
+      <div class="wrap">
+        <div class="sec-head"><span class="label">02 — The story</span><h2 class="fade-up">What started with a shovel.</h2></div>
+        <div class="prose fade-up">
+        <p class="lead">This started with a shovel.</p>
+        <p>After 30 years in corporate security, I was made redundant. No plan. No clear direction. For the first time in decades, there was no structure. No system. No playbook. Just me.</p>
+        <p>But I knew one thing &mdash; I had to challenge myself. So I did something completely out of character. When my son casually suggested building a basketball court in the garden, I said yes.</p>
+        <p>Truth is, DIY is not my world. Not even close. But that wasn't the point. This wasn't really about a basketball court.</p>
+        <p>It became the hardest thing I've ever done. Physically. Mentally. Sleepless nights. Endless digging. Stone after stone. Root after root. And no matter how much I cleared, there was always more underneath.</p>
+        <p>At one point &mdash; exhausted, covered in dirt, hands trashed &mdash; I stopped. Had a moment.</p>
+        <p>I realised I was tearing everything out. All these stones. And yet, eventually, I'd be putting stones back in. But this time, it wouldn't be random. It would be Sub-base Type 1. Compacted. Structured. Solid. Every piece working together for strength and stability.</p>
+        <p class="hard">That hit me hard. Because that's exactly what I was doing with my own life. Breaking everything down. So I could rebuild it properly.</p>
+        <figure class="court" aria-hidden="true">
+          <svg viewBox="0 0 600 360" role="presentation">
+            <path class="draw base" pathLength="1" d="M20 20 H580 V340 H20 Z"/>
+            <path class="draw" pathLength="1" d="M230 20 V190 H370 V20"/>
+            <path class="draw" pathLength="1" d="M230 190 A70 70 0 0 0 370 190"/>
+            <path class="draw" pathLength="1" d="M60 20 V110 A250 250 0 0 0 540 110 V20"/>
+            <path class="draw" pathLength="1" d="M265 52 H335"/>
+            <path class="draw" pathLength="1" d="M300 52 V62"/>
+            <path class="draw" pathLength="1" d="M300 62 m-11 11 a11 11 0 1 0 22 0 a11 11 0 1 0 -22 0"/>
+            <path class="draw base" pathLength="1" d="M240 340 A60 60 0 0 1 360 340"/>
+          </svg>
+          <figcaption class="label">Sub-base Type 1 &middot; Compacted &middot; Structured &middot; Solid</figcaption>
+        </figure>
+        <p>That basketball court became a metaphor for everything. Resilience. Rebuilding. Bouncing back.</p>
+        <p>Within six months, I'd done the same with my work:</p>
+        <ul>
+          <li>Completed the WMintel AI Programme at Netcom Training (Levels 100&ndash;300)</li>
+          <li>Built and shipped AI products across education, travel, legal tech, banking, retail, B2B sales and customer retention</li>
+          <li>Designed and deployed AI agents, cloud infrastructure, payment systems and live websites</li>
+          <li>Studied Machine Learning, Deep Learning, Generative AI, Computer Vision, NLP and Prompt Engineering</li>
+        </ul>
+        <p class="closing">The discipline from thirty years in security is still the foundation. It just builds different things now.</p></div>
+      </div>
+    </section>
+
+    <section class="sec" id="now">
+      <div class="wrap">
+        <div class="sec-head"><span class="label">03 — Now</span><div>
+          <p class="now-title fade-up">The products are built. Now they're going to <em class="accent">real users</em>.</p>
+          <p class="now-intro">This season is about first partners: a school, a handful of independent travel agents, and the freelancers and small firms Clara was built for. Early partners get direct access to me, and their feedback shapes what comes next.</p>
+          <ul class="status-board">
+          <li class="status-row fade-up"><span class="pill active">Pilot open</span>
+            <div><strong>Illusum</strong><p>Pilot places open for a small number of UK schools &mdash; a small group of students, one half-term, no cost.</p></div></li>
+          <li class="status-row fade-up"><span class="pill ready">Partners wanted</span>
+            <div><strong>Sortd</strong><p>Taking on its first independent travel agents, with founder pricing for early partners.</p></div></li>
+          <li class="status-row fade-up"><span class="pill testing">Live</span>
+            <div><strong>Clara Disputes</strong><p>Taking orders, and finding the best ways to reach freelancers and small firms.</p></div></li></ul>
+        </div></div>
+      </div>
+    </section>
+
+    <section class="sec alt contact" id="contact">
+      <div class="wrap contact-grid">
+        <div>
+          <span class="label">04 — Get in touch</span>
+          <h2 class="fade-up">If anything here is <em class="accent">useful</em> to you, let's talk.</h2>
+          <p class="contact-intro">Whether you run a school, a travel agency or a small business, I'm happy to show you a demo or talk through whether something here could help. Every message comes straight to me, and I reply personally.</p>
+          <ul class="channels">
+            <li><a href="mailto:colin@colinwilliams.space"><span class="label">Email</span><span class="v">colin@colinwilliams.space</span></a></li>
+            <li><a href="https://www.linkedin.com/in/colin-williams-ai" target="_blank" rel="noopener"><span class="label">LinkedIn</span><span class="v">Colin Williams &rarr;</span></a></li>
+            <li><a href="https://github.com/williamssivarto-jpg" target="_blank" rel="noopener"><span class="label">GitHub</span><span class="v">williamssivarto &rarr;</span></a></li>
+          </ul>
+        </div>
+        <form class="fade-up" action="https://formspree.io/f/xpqeqwdv" method="POST">
+          <div class="field"><label class="label" for="name">Your name</label><input id="name" name="name" type="text" autocomplete="name" required></div>
+          <div class="field"><label class="label" for="email">Your email</label><input id="email" name="email" type="email" autocomplete="email" required></div>
+          <div class="field"><label class="label" for="subject">Subject</label><input id="subject" name="subject" type="text" placeholder="e.g. Illusum school pilot"></div>
+          <div class="field"><label class="label" for="message">Message</label><textarea id="message" name="message" rows="5" required></textarea></div>
+          <button class="btn primary" type="submit">Send message</button>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer><div class="wrap">
+    <span class="label">Colin Williams &middot; Wolverhampton, UK &middot; &copy; 2026</span>
+    <span class="label foot-links"><a href="lab.html">Personal projects &rarr;</a><a href="mailto:colin@colinwilliams.space">Email</a></span>
+  </div></footer>
+  <script>
+  document.documentElement.classList.remove('no-js');
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const nav = document.querySelector('.nav');
+  const onScroll = () => nav.classList.toggle('scrolled', scrollY > 24);
+  onScroll(); addEventListener('scroll', onScroll, { passive: true });
+  const btn = document.querySelector('.menu-btn');
+  btn.addEventListener('click', () => { const o = nav.classList.toggle('open'); btn.setAttribute('aria-expanded', o); });
+  document.querySelectorAll('.nav-links a').forEach(a => a.addEventListener('click', () => { nav.classList.remove('open'); btn.setAttribute('aria-expanded', false); }));
+
+  const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); } }),
+    { threshold: 0.12, rootMargin: '0px 0px -60px 0px' });
+  document.querySelectorAll('.grid').forEach(g => g.querySelectorAll('.card').forEach((c, i) => c.style.transitionDelay = (i % 3) * 110 + 'ms'));
+  document.querySelectorAll('.fade-up, figure.court').forEach(el => io.observe(el));
+  document.querySelectorAll('.court .draw').forEach((p, i) => p.style.transitionDelay = i * .18 + 's');
+
+  if (!reduce) {
+    document.querySelectorAll('.stat-num[data-count]').forEach((el, k) => {
+      const target = +el.dataset.count; if (target < 3) return;
+      const t0 = performance.now() + 250 + k * 150, dur = 1400; el.textContent = '0';
+      const tick = now => { const t = Math.min(1, Math.max(0, (now - t0) / dur)); el.textContent = Math.round(target * (1 - Math.pow(1 - t, 3))); if (t < 1) requestAnimationFrame(tick); };
+      requestAnimationFrame(tick);
+    });
+    const deck = document.querySelector('.deck'), inner = document.querySelector('.deck-inner');
+    if (deck && matchMedia('(hover: hover)').matches) {
+      deck.addEventListener('mousemove', e => { const r = deck.getBoundingClientRect(); const x = (e.clientX - r.left) / r.width - .5, y = (e.clientY - r.top) / r.height - .5;
+        inner.style.transform = `rotateY(${x * 8}deg) rotateX(${-y * 6}deg)`; });
+      deck.addEventListener('mouseleave', () => inner.style.transform = '');
+    }
+  }
+</script>
+</body>
+</html>
