@@ -168,6 +168,7 @@
     /* grid */
     .grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(20px, 2.4vw, 32px); }
     .grid.two { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .grid.pair { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     .card { display: flex; flex-direction: column; background: var(--surface); border: 1px solid var(--line-2); border-radius: 20px; overflow: hidden; transition: border-color .3s; }
     .card:hover { border-color: var(--line); }
     .card .plate { border-radius: 0; }
@@ -181,7 +182,7 @@
     .more .desc { font-size: calc(var(--body-size) - 2px); margin: 6px 0 4px; }
     .card .cta-link { margin-top: auto; }
     @media (max-width: 1000px) { .grid, .grid.two { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
-    @media (max-width: 640px) { .grid, .grid.two { grid-template-columns: 1fr; } }
+    @media (max-width: 640px) { .grid, .grid.two, .grid.pair { grid-template-columns: 1fr; } }
 
     /* now */
     .now-title { font-family: var(--display); font-size: clamp(30px, 3.6vw, 46px); line-height: 1.15; letter-spacing: -0.02em; max-width: 22ch; margin: 0 0 24px; }
@@ -276,7 +277,7 @@
           <div class="ctas"><a class="btn primary" href="#work">See the work <span aria-hidden="true">&darr;</span></a><a class="btn ghost" href="#contact">Get in touch</a></div>
           <div class="stats" aria-label="At a glance">
             <div class="stat"><span class="stat-num" data-count="30">30</span><span class="label">Years in security</span></div>
-            <div class="stat"><span class="stat-num" data-count="7">7</span><span class="label">Products live</span></div>
+            <div class="stat"><span class="stat-num" data-count="3">3</span><span class="label">Products live</span></div>
             <div class="stat"><span class="stat-num">1</span><span class="label">Rebuild</span></div>
           </div>
         </div>
@@ -301,7 +302,7 @@
 
     <section class="sec" id="work">
       <div class="wrap">
-        <div class="sec-head"><span class="label">01 — Selected work</span><div><h2 class="fade-up">Two products, ready for their first partners.</h2><p>Each one solves one real problem for one kind of customer. Both are live, and you can try them today.</p></div></div>
+        <div class="sec-head"><span class="label">01 — Selected work</span><div><h2 class="fade-up">Three products, ready for their first partners.</h2><p>Each one solves one real problem for one kind of customer. All three are live, and you can try them today.</p></div></div>
         <div class="features">
       <article class="feature fade-up" id="illusum">
         <div class="feature-text">
@@ -334,24 +335,25 @@
             <div class="frame-view"><img src="sortd.webp" alt="Sortd live demo: the holiday matcher asks who is travelling" width="1000" height="625" loading="lazy" decoding="async"></div>
           </div>
         </div>
-      </article></div>
-        <div class="sec-head" style="margin-top: clamp(80px, 10vw, 128px)"><span class="label">More products</span><div><h2 class="fade-up">Five more, each solving one problem well.</h2></div></div>
-        <div class="grid">
-        <article class="card fade-up" id="clara">
-          <div class="plate" style="--brand:#C9A646">
+      </article>
+      <article class="feature fade-up" id="clara">
+        <div class="feature-text">
+          <div class="meta"><span class="status">Live &middot; Law firm pilots open</span><span class="sector">Legal Tech</span></div>
+          <h3 class="feature-name">Clara</h3>
+          <p class="tagline">An AI intake assistant for small law firms.</p>
+          <p class="desc">Small firms lose time on enquiries that start with &ldquo;tell us about your problem&rdquo;. Clara sits on the firm's own website, gathers the facts of each dispute in plain English, flags anything urgent such as court papers or deadlines, and emails the firm a structured summary with a lead score and the other side's name for a conflict check. It never gives legal advice; that stays with the solicitors.</p>
+          <ul class="tags"><li>Free 3-month pilot</li><li>£199 / month</li><li>Urgency flags</li><li>No legal advice, by design</li></ul>
+          <div class="feature-ctas"><a class="cta-link" href="https://claradisputes.co.uk/#demo" target="_blank" rel="noopener">Try the live demo<span aria-hidden="true">&rarr;</span></a><a class="cta-link quiet" href="#contact">Ask about a pilot<span aria-hidden="true">&rarr;</span></a></div>
+        </div>
+        <div class="plate big" style="--brand:#C9A646">
           <div class="frame">
             <div class="frame-bar" aria-hidden="true"><i></i><i></i><i></i><span>claradisputes.co.uk</span></div>
             <div class="frame-view"><img src="clara.webp" alt="Clara demo: an AI intake chat for a law firm beside the structured enquiry the firm receives" width="1000" height="625" loading="lazy" decoding="async"></div>
           </div>
         </div>
-          <div class="card-body">
-            <div class="meta"><span class="status">Live</span><span class="sector">Legal Tech</span></div>
-            <h3 class="card-name">Clara Disputes</h3>
-            <p class="tagline small">An AI intake assistant for small law firms that triages every dispute enquiry.</p>
-            <details class="more"><summary>More about Clara Disputes</summary><p class="desc">Small law firms lose time on enquiries that start with &ldquo;tell us about your problem&rdquo;. Clara sits on the firm's website in its branding, gathers the facts of each dispute, flags anything urgent such as court papers or deadlines, and emails the firm a structured summary with a lead score and the other side's name for a conflict check. It never gives legal advice; that stays with the solicitors.</p></details>
-            <a class="cta-link" href="https://claradisputes.co.uk" target="_blank" rel="noopener">Visit Clara<span aria-hidden="true">&rarr;</span></a>
-          </div>
-        </article>
+      </article></div>
+        <div class="sec-head" style="margin-top: clamp(80px, 10vw, 128px)"><span class="label">Other builds</span><div><h2 class="fade-up">Working demos in other sectors.</h2><p>Built to show range. I&apos;m not taking clients for these right now.</p></div></div>
+        <div class="grid pair">
         <article class="card fade-up" id="ria">
           <div class="plate" style="--brand:#8B7CF6">
           <div class="frame">
@@ -360,7 +362,7 @@
           </div>
         </div>
           <div class="card-body">
-            <div class="meta"><span class="status">Live</span><span class="sector">E-commerce</span></div>
+            <div class="meta"><span class="status muted">Demo</span><span class="sector">E-commerce</span></div>
             <h3 class="card-name">Ria</h3>
             <p class="tagline small">A 24/7 branded support agent for growing online retailers.</p>
             <details class="more"><summary>More about Ria</summary><p class="desc">Too big to manage support by hand, too small for enterprise software. Ria handles the everyday questions &mdash; orders, returns, sizing, faults &mdash; in your brand voice, instantly. Every conversation is logged, and a weekly summary shows you what customers are asking about.</p></details>
@@ -375,7 +377,7 @@
           </div>
         </div>
           <div class="card-body">
-            <div class="meta"><span class="status">Live</span><span class="sector">B2B Sales</span></div>
+            <div class="meta"><span class="status muted">Demo</span><span class="sector">B2B Sales</span></div>
             <h3 class="card-name">Prospex</h3>
             <p class="tagline small">Researched, personalised cold outreach.</p>
             <details class="more"><summary>More about Prospex</summary><p class="desc">Prospex reads each prospect, researches their company, identifies likely pain points and drafts a personalised cold email tailored to your offer. No templates, no generic copy. Built for sales teams, agencies and recruiters who need volume without losing relevance.</p></details>
@@ -390,7 +392,7 @@
           </div>
         </div>
           <div class="card-body">
-            <div class="meta"><span class="status">Live demo</span><span class="sector">Banking</span></div>
+            <div class="meta"><span class="status muted">Demo</span><span class="sector">Banking</span></div>
             <h3 class="card-name">Sybil</h3>
             <p class="tagline small">Customer support and triage for small banks and building societies.</p>
             <details class="more"><summary>More about Sybil</summary><p class="desc">Smaller institutions want better customer experiences but can't afford to build them. Sybil is a support and triage layer designed with FCA Consumer Duty in mind &mdash; helpful within clear boundaries, and deployed without touching core banking systems.</p></details>
